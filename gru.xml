@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote  name="cros"
+           fetch="https://chromium.googlesource.com"
+           review="https://chromium-review.googlesource.com" />
+  <remote  name="github"
+	   fetch="https://github.com/JeffyCN/" />
+  <default revision="refs/heads/firmware-gru-8785.B"
+           remote="cros" sync-j="8" />
+  <notice>
+Your sources have been sync'd successfully.
+  </notice>
+
+  <project path="depthcharge" name="chromiumos/platform/depthcharge" />
+  <project path="arm-trusted-firmware"
+	   name="chromiumos/third_party/arm-trusted-firmware" >
+	   <linkfile src="."
+		     dest="coreboot/3rdparty/arm-trusted-firmware" />
+
+	   <!-- Place hold -->
+	   <linkfile src="Makefile"
+		     dest="arm-trusted-firmware/3rdparty/arm-trusted-firmware/bl31/placehold" />
+
+	   <linkfile src="3rdparty/arm-trusted-firmware/bl31"
+		     dest="arm-trusted-firmware/build" />
+  </project>
+  <project path="blobs" name="chromiumos/third_party/coreboot/blobs" >
+	   <linkfile src="."
+		     dest="coreboot/3rdparty/blobs" />
+  </project>
+  <project path="vboot_reference" name="chromiumos/platform/vboot_reference" >
+	   <linkfile src="."
+		     dest="coreboot/3rdparty/vboot" />
+  </project>
+  <project path="ec" name="chromiumos/platform/ec" >
+	   <linkfile src="."
+		     dest="coreboot/3rdparty/ec" />
+  </project>
+  <project path="coreboot" name="chromiumos/third_party/coreboot" >
+	   <!-- Place hold -->
+	   <copyfile src="Makefile"
+		     dest="coreboot/payloads/libpayload/.config" />
+	   <copyfile src="Makefile"
+		     dest="coreboot/payloads/libpayload/.xcompile" />
+
+	   <linkfile src="payloads/libpayload/.config"
+		     dest="coreboot/payloads/libpayload/libpayload.config" />
+	   <linkfile src="payloads/libpayload/.xcompile"
+		     dest="coreboot/payloads/libpayload/libpayload.xcompile" />
+  </project>
+  <project path="chromiumos-overlay" sync-c="true"
+	   name="chromiumos/overlays/chromiumos-overlay" >
+	   <linkfile src="sys-boot/coreboot/files/configs/"
+		     dest="coreboot_config" />
+	   <linkfile src="sys-boot/libpayload/files/configs"
+		     dest="payload_config" />
+  </project>
+  <project path="scripts" name="cros-fw-scripts.git"
+	   remote="github" revision="master" >
+	   <linkfile src="build.sh" dest="build.sh" />
+  </project>
+  <project path="bin" name="cros-fw-binaries.git"
+	   remote="github" revision="master" >
+	   <linkfile src="." dest="arm-trusted-firmware/bin" />
+  </project>
+</manifest>
